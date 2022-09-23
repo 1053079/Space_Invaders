@@ -14,7 +14,7 @@ screen = pygame.display.set_mode((800, 600))
 background = pygame.image.load('Background.png')
 
 # Background Sound
-mixer.music.load("background.wav")
+mixer.music.load("Japanize Dream.wav")
 mixer.music.play(-1)
 
 # Title and icon
@@ -23,7 +23,7 @@ icon = pygame.image.load('spaceship.png')
 pygame.display.set_icon(icon)
 
 # Player
-playerImg = pygame.image.load("player.png")
+playerImg = pygame.image.load("reimu.png")
 playerX = 370
 playerY = 480
 playerX_change = 0
@@ -135,6 +135,13 @@ while running:
 
     # Enemy Movement
     for i in range(num_of_enemies):
+        # Game Over
+        if enemyY[i] > 440:
+            for j in range(num_of_enemies):
+                enemyY[j] = 2000
+            game_over_text()
+            break
+
         enemyX[i] += enemyX_change[i]
         if   enemyX[i] <= 0:
             enemyX_change[i] = 2
