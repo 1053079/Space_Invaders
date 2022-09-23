@@ -52,7 +52,7 @@ while running:
     if playerX <= 0:
         playerX = 0
     elif playerX >= 768:
-        playerX = 736
+        playerX = 768
 
     player(playerX, playerY)
     pygame.display.update()
