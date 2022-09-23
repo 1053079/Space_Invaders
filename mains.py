@@ -1,6 +1,8 @@
 import pygame
 import math
 import random
+from pygame import mixer
+
 
 # Initialize the pygame
 pygame.init()
@@ -10,6 +12,10 @@ screen = pygame.display.set_mode((800, 600))
 
 # Background Image
 background = pygame.image.load('Background.png')
+
+# Background Sound
+mixer.music.load("background.wav")
+mixer.music.play(-1)
 
 # Title and icon
 pygame.display.set_caption("Space Invaders")
@@ -49,7 +55,15 @@ bulletX_change = 5
 bulletY_change = 20
 bullet_state = "ready"
 
-score = 0
+# Score
+score_value = 0
+font = pygame.font.Font('freesansbold.ttf', 32)
+textX = 10
+textY = 10
+
+def show_score(x, y):
+    score = font.render("Score :" + str(score_value), True, (255,255,255))
+    screen.blit(score, (x, y))
 
 
 def player(x, y):
@@ -98,9 +112,11 @@ while running:
 
             if event.key == pygame.K_SPACE:
                 if bullet_state is "ready":
+                    bullet_Sound = mixer.Sound('Pew.wav')
+                    bullet_Sound.play()
                     # Get the current x coordinate of the spaceship
                     bulletX = playerX
-                fire_bullet(bulletX, bulletY)
+                    fire_bullet(bulletX, bulletY)
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -130,11 +146,13 @@ while running:
         # Collision
         collision = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
         if collision:
-         bulletY = 480
-         bullet_state = "ready"
-         score += 1
-         enemyX[i] = random.randint(0, 769)
-         enemyY[i] = random.randint(50, 150)
+            explosion_Sound = mixer.Sound('explosion.wav')
+            explosion_Sound.play()
+            bulletY = 480
+            bullet_state = "ready"
+            score_value += 1
+            enemyX[i] = random.randint(0, 769)
+            enemyY[i] = random.randint(50, 150)
         enemy(enemyX[i], enemyY[i], i)
 
     # Bullet Movement
@@ -147,4 +165,5 @@ while running:
         bulletY -= bulletY_change
 
     player(playerX, playerY)
+    show_score(textX, textY)
     pygame.display.update()
