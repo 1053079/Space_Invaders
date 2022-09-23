@@ -61,9 +61,17 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 textX = 10
 textY = 10
 
+# Game Over Text
+over_font = pygame.font.Font('freesansbold.ttf', 64)
+
+
 def show_score(x, y):
     score = font.render("Score :" + str(score_value), True, (255,255,255))
     screen.blit(score, (x, y))
+
+def game_over_text():
+    over_text = over_font.render("You DIED", True, (255, 0, 0))
+    screen.blit(over_text, (250, 270))
 
 
 def player(x, y):
@@ -153,8 +161,9 @@ while running:
         # Collision
         collision = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
         if collision:
-            explosion_Sound = mixer.Sound('explosion.wav')
-            explosion_Sound.play()
+            explosion = pygame.mixer.Sound('explosion.wav')
+            explosion.set_volume(0.5)
+            explosion.play()
             bulletY = 480
             bullet_state = "ready"
             score_value += 1
