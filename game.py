@@ -1,5 +1,5 @@
 import pygame
-from menu import MainMenu
+from menu import *
 
 
 class Game():
@@ -13,7 +13,10 @@ class Game():
         self.font_name = 'freesansbold.ttf'
         # self.font_name = pygame.font.get_default_font()
         self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
-        self.curr_menu = MainMenu(self)
+        self.main_menu = MainMenu(self)
+        self.options = OptionsMenu(self)
+        self.credits = CreditsMenu(self)
+        self.curr_menu = self.main_menu
 
     def game_loop(self):
         while self.playing:
@@ -23,6 +26,7 @@ class Game():
             self.display.fill(self.BLACK)
             self.draw_text("Thank you for playing", 20, self.DISPLAY_W / 2, self.DISPLAY_H / 2)
             self.window.blit(self.display, (0, 0))
+
             pygame.display.update()
             self.reset_keys()
 

@@ -3,7 +3,7 @@ import math
 import random
 from pygame import mixer
 from game import Game
-from menu import MainMenu
+
 
 # Initialize the pygame
 surface = pygame.display.set_mode((600, 400))
